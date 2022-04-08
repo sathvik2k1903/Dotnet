@@ -7,21 +7,24 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: windows-2022
 
 steps:
 - task: NuGetToolInstaller@1
+  displayName: NugetToolInstallation
   inputs:
     versionSpec: '4.4.1'
     checkLatest: true
 
 - task: NuGetCommand@2
+  displayName: NugetRestore
   inputs:
     command: 'restore'
     restoreSolution: '**/*.sln'
     feedsToUse: 'select'
 
 - task: VSBuild@1
+  displayName: VisualStudioBuild
   inputs:
     solution: '**\*.sln'
     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactstagingdirectory)\\"'
@@ -29,6 +32,7 @@ steps:
     configuration: '$(BuildConfiguration)'
 
 - task: PublishBuildArtifacts@1
+  displayName: PublishBuildArtifacts
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
