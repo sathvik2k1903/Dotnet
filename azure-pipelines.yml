@@ -31,7 +31,7 @@ steps:
 - task: CopyFiles@2
   displayName: CopyFilesToTargetFolder
   inputs:
-    SourceFolder: '**/*aspnet-get-started'
+    SourceFolder: 'aspnet-get-started'
     Contents: '**'
     TargetFolder: '$(build.artifactstagingdirectory)/drop'
 
