@@ -24,22 +24,18 @@ steps:
     feedsToUse: 'select'
 
 - task: VSBuild@1
-  displayName: VisualstudioBuild
+  displayName: VisualStudioBuild
   inputs:
     solution: '**\*.sln'
-    platform: '$(BuildPlatform)'
-    configuration: '$(BuildConfiguration)'
 
 - task: CopyFiles@2
-  displayName: CopyFilestoTargetFolder
   inputs:
-    SourceFolder: '**/aspnet-get-started'
+    SourceFolder: '**/*aspnet-get-started'
     Contents: '**'
-    TargetFolder: $(build.artifactstagingdirectory)
+    TargetFolder: '$(build.artifactstagingdirectory)/drop'
 
 - task: PublishBuildArtifacts@1
-  displayName: PublishBuildArtifact
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/drop'
     ArtifactName: 'drop'
     publishLocation: 'Container'
