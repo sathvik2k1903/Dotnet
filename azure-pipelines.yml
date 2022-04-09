@@ -29,12 +29,14 @@ steps:
     solution: '**\*.sln'
 
 - task: CopyFiles@2
+  displayName: CopyFilesToTargetFolder
   inputs:
     SourceFolder: '**/*aspnet-get-started'
     Contents: '**'
     TargetFolder: '$(build.artifactstagingdirectory)/drop'
 
 - task: PublishBuildArtifacts@1
+  displayName: PublishbuildArtifact
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/drop'
     ArtifactName: 'drop'
