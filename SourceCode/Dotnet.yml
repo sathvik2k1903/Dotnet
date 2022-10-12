@@ -5,11 +5,11 @@
 
 
 stages:
-- stage: "Build-Stage"
-  displayName: "Build-Stage"
+- stage: "BuildStage"
+  displayName: "BuildStage"
   jobs:
   - job:
-    displayName: "Build-Job"
+    displayName: "BuildJob"
     pool:
      vmImage: windows-latest
     steps:
