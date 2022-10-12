@@ -3,41 +3,40 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger:
-- main
 
-pool:
-  vmImage: windows-latest
-
-steps:
-- task: NuGetToolInstaller@1
-  displayName: NugetToolInstallation
-  inputs:
-    versionSpec: '4.4.1'
-    checkLatest: true
-
-- task: NuGetCommand@2
-  displayName: NugetRestore
-  inputs:
-    command: 'restore'
-    restoreSolution: '**/*.sln'
-    feedsToUse: 'select'
-
-- task: VSBuild@1
-  displayName: VisualStudioBuild
-  inputs:
-    solution: '**\*.sln'
-
-- task: CopyFiles@2
-  displayName: CopyFilesToTargetFolder
-  inputs:
-    SourceFolder: 'SourceCode'
-    Contents: '**'
-    TargetFolder: '$(build.artifactstagingdirectory)/drop'
-
-- task: PublishBuildArtifacts@1
-  displayName: PublishbuildArtifact
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/drop'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+stages:
+- stage: "Build Stage"
+  displayName: "Build Stage"
+  jobs:
+  - job:
+    displayName: "Build Job"
+    pool:
+     vmImage: windows-latest
+    steps:
+    - task: NuGetToolInstaller@1
+      displayName: NugetToolInstallation
+      inputs:
+        versionSpec: '4.4.1'
+        checkLatest: true
+    - task: NuGetCommand@2
+      displayName: NugetRestore
+      inputs:
+        command: 'restore'
+        restoreSolution: '**/*.sln'
+        feedsToUse: 'select'
+    - task: VSBuild@1
+      displayName: VisualStudioBuild
+      inputs:
+        solution: '**\*.sln'
+    - task: CopyFiles@2
+      displayName: CopyFilesToTargetFolder
+      inputs:
+        SourceFolder: 'SourceCode'
+        Contents: '**'
+        TargetFolder: '$(build.artifactstagingdirectory)/drop'
+    - task: PublishBuildArtifacts@1
+      displayName: PublishbuildArtifact
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/drop'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
