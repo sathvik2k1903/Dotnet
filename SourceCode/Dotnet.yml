@@ -6,7 +6,7 @@
 
 stages:
 - stage: "BuildStage"
-  displayName: "BuildStage"
+  displayName: "Build Stage"
   jobs:
   - job:
     displayName: "BuildJob"
@@ -14,29 +14,55 @@ stages:
      vmImage: windows-latest
     steps:
     - task: NuGetToolInstaller@1
-      displayName: NugetToolInstallation
+      displayName: "NugetTool Installation"
       inputs:
         versionSpec: '4.4.1'
         checkLatest: true
     - task: NuGetCommand@2
-      displayName: NugetRestore
+      displayName: "Nuget Restore"
       inputs:
         command: 'restore'
         restoreSolution: '**/*.sln'
         feedsToUse: 'select'
     - task: VSBuild@1
-      displayName: VisualStudioBuild
+      displayName: "VisualStudio Build"
       inputs:
         solution: '**\*.sln'
     - task: CopyFiles@2
-      displayName: CopyFilesToTargetFolder
+      displayName: "CopyFiles To TargetFolder"
       inputs:
         SourceFolder: 'SourceCode'
         Contents: '**'
         TargetFolder: '$(build.artifactstagingdirectory)/drop'
     - task: PublishBuildArtifacts@1
-      displayName: PublishbuildArtifact
+      displayName: "Publish build Artifact"
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)/drop'
         ArtifactName: 'drop'
         publishLocation: 'Container'
+
+- stage:  "DeployStage"
+  jobs:
+    - job:
+      displayName: "dev deploy"
+      dependsOn: "BuildJob"
+      pool:
+       vmImage: windows-latest
+      steps:
+      - task: DownloadBuildArtifacts@1
+        displayName:  "Download Artifact"
+        inputs:
+          buildType: 'specific'
+          project: 'e76c2b44-8776-4f98-8029-071e7eb6853a'
+          pipeline: '70'
+          buildVersionToDownload: 'latest'
+          downloadType: 'single'
+          downloadPath: '$(System.ArtifactsDirectory)'
+      - task: AzureRmWebAppDeployment@4
+        displayName: "dev app deploy"
+        inputs:
+          ConnectionType: 'AzureRM'
+          azureSubscription: 'Sathvik Azure'
+          appType: 'webApp'
+          WebAppName: 'sathvikappservice-dev'
+          packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
