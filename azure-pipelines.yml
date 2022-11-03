@@ -42,7 +42,7 @@ stages:
         - task: PublishBuildArtifacts@1
           displayName:  publish artifact to drop
           inputs:
-            PathtoPublish: '$(Build.ArtifactStagingDirectory)/drop'
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)\drop'
             ArtifactName: 'drop'
             publishLocation: 'Container'
 
