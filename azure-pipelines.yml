@@ -56,7 +56,7 @@ stages:
            inputs:
             buildType: 'current'
             downloadType: 'specific'
-            itemPattern: '**/drop'
+            itemPattern: '**'
             downloadPath: '$(System.ArtifactsDirectory)'
 
          - task: AzureRmWebAppDeployment@4
@@ -65,4 +65,4 @@ stages:
             azureSubscription: 'Sathvik Azure'
             appType: 'webApp'
             WebAppName: 'Webapp-eus-001'
-            packageForLinux: '$(Build.ArtifactStagingDirectory)/drop.zip'
+            packageForLinux: '$(Build.ArtifactStagingDirectory)'
