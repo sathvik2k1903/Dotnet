@@ -52,19 +52,23 @@ stages:
       - job: "Deploy"
         displayName: Deploy
         steps:
-           - task: DownloadBuildArtifacts@1
-             inputs:
-              buildType: 'current'
-              downloadType: 'single'
-              itemPattern: 'drop/**'
-              downloadPath: '$(System.ArtifactsDirectory)'
+         - task: DownloadBuildArtifacts@1
+           inputs:
+            buildType: 'specific'
+            project: 'e76c2b44-8776-4f98-8029-071e7eb6853a'
+            pipeline: '101'
+            buildVersionToDownload: 'specific'
+            buildId: '436'
+            downloadType: 'single'
+            artifactName: 'drop'
+            downloadPath: '$(System.ArtifactsDirectory)'
 
-           - task: AzureWebApp@1
-             inputs:
-              azureSubscription: 'Sathvik Azure'
-              appType: 'webApp'
-              appName: 'Webapp-eus-001'
-              package: '$(System.DefaultWorkingDirectory)/**/*.zip'
-              deploymentMethod: 'auto'
+         - task: AzureWebApp@1
+           inputs:
+             azureSubscription: 'Sathvik Azure'
+             appType: 'webApp'
+             appName: 'Webapp-eus-001'
+             package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+             deploymentMethod: 'auto'
 
 
