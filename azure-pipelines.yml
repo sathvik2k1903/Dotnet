@@ -50,25 +50,21 @@ stages:
   - stage: "Deploy"
     jobs:
       - job: "Deploy"
-        pool:
-          vmImage: windows-latest
-          displayName: Deploy
-          steps:
-          - task: DownloadBuildArtifacts@1
-            displayname: Download Build Artifact
-            inputs:
-            buildType: 'current'
-            downloadType: 'single'
-            itemPattern: 'drop/**'
-            downloadPath: '$(System.ArtifactsDirectory)'
+        displayName: Deploy
+        steps:
+           - task: DownloadBuildArtifacts@1
+             inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              itemPattern: 'drop/**'
+              downloadPath: '$(System.ArtifactsDirectory)'
 
-          - task: AzureWebApp@1
-            displayname: webapp deploy
-            inputs:
-            azureSubscription: 'Sathvik Azure'
-            appType: 'webApp'
-            appName: 'Webapp-eus-001'
-            package: '$(System.DefaultWorkingDirectory)/**/*.zip'
-            deploymentMethod: 'auto'
+           - task: AzureWebApp@1
+             inputs:
+              azureSubscription: 'Sathvik Azure'
+              appType: 'webApp'
+              appName: 'Webapp-eus-001'
+              package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+              deploymentMethod: 'auto'
 
 
