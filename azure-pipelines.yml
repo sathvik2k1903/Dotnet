@@ -8,8 +8,8 @@
 trigger:
 - main
 
-# key value pair
-pool: "windows-latest"
+pool:
+  vmImage: windows-latest
 
 # list/arrary
 # Stages are groups of jobs that can run without human intervention.
