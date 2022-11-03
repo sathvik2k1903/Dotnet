@@ -20,7 +20,7 @@ pool: "windows-latest"
 stages:
   - stage: "build"
     jobs:
-      - job: "build-job"
+      - job: "buildjob"
         displayName: Build
         steps:
         - task: NuGetToolInstaller@1
