@@ -68,7 +68,7 @@ stages:
              azureSubscription: 'Sathvik Azure'
              appType: 'webApp'
              appName: 'Webapp-eus-001'
-             package: '$(System.ArtifactsDirectory)'
+             package: '$(System.ArtifactsDirectory)\.zip'
              deploymentMethod: 'auto'
 
 
