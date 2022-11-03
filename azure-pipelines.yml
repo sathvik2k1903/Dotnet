@@ -18,7 +18,7 @@ pool:
 # steps can be either scripts or tasks.
 # tasks are simple pre created scripts offered as per your convenince.
 stages:
-  - stage: "build"
+  - stage: "Build"
     jobs:
       - job: "buildjob"
         displayName: Build
@@ -46,6 +46,31 @@ stages:
             ArtifactName: 'drop'
             publishLocation: 'Container'
 
+# deploy Stage
   - stage: "Deploy"
-  
+    jobs:
+    pool:
+      vmImage: windows-latest
+      job: "Deployjob"
+      displayName: Deploy
+      steps:
+        - task: DownloadBuildArtifacts@1
+          displayName: Dowmload build artifact
+          inputs:
+            buildType: 'specific'
+            project: 'e76c2b44-8776-4f98-8029-071e7eb6853a'
+            pipeline: '101'
+            buildVersionToDownload: 'latest'
+            downloadType: 'single'
+            downloadPath: '$(System.ArtifactsDirectory)'
+        - task: AzureRmWebAppDeployment@4
+          displayName: Web app Deploy
+          inputs:
+          ConnectionType: 'AzureRM'
+          azureSubscription: 'Sathvik Azure'
+          appType: 'webApp'
+          WebAppName: 'Webapp-eus-001'
+          VirtualApplication: 'Webapp-eus-001'
+          packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+
 
