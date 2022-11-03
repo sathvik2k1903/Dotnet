@@ -65,4 +65,4 @@ stages:
             azureSubscription: 'Sathvik Azure'
             appType: 'webApp'
             WebAppName: 'Webapp-eus-001'
-            packageForLinux: '$(System.ArtifactsDirectory)\.zip'
+            packageForLinux: '$(Build.ArtifactStagingDirectory)\.zip'
