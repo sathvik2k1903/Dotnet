@@ -65,8 +65,8 @@ stages:
 
          - task: AzureRmWebAppDeployment@4
            inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'Sathvik Azure'
-              appType: 'webApp'
-              WebAppName: 'Webapp-eus-001'
-              packageForLinux: '$(System.ArtifactsDirectory)\.zip'
+            ConnectionType: 'AzureRM'
+            azureSubscription: 'Sathvik Azure'
+            appType: 'webApp'
+            WebAppName: 'Webapp-eus-001'
+            packageForLinux: '$(System.ArtifactsDirectory)\.zip'
