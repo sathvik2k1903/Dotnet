@@ -55,22 +55,20 @@ stages:
           displayName: Deploy
           steps:
           - task: DownloadBuildArtifacts@1
-            displayName: Dowmload build artifact
+            displayname: Download Build Artifact
             inputs:
-              buildType: 'specific'
-              project: 'e76c2b44-8776-4f98-8029-071e7eb6853a'
-              pipeline: '101'
-              buildVersionToDownload: 'latest'
-              downloadType: 'single'
-              downloadPath: '$(System.ArtifactsDirectory)'
-          - task: AzureRmWebAppDeployment@4
-            displayName: Web app Deploy
+            buildType: 'current'
+            downloadType: 'single'
+            itemPattern: 'drop/**'
+            downloadPath: '$(System.ArtifactsDirectory)'
+
+          - task: AzureWebApp@1
+            displayname: webapp deploy
             inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'Sathvik Azure'
-              appType: 'webApp'
-              WebAppName: 'Webapp-eus-001'
-              VirtualApplication: 'Webapp-eus-001'
-              packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+            azureSubscription: 'Sathvik Azure'
+            appType: 'webApp'
+            appName: 'Webapp-eus-001'
+            package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+            deploymentMethod: 'auto'
 
 
