@@ -1,0 +1,47 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+# used to sepearate the document or starts a new document
+# list/array in block style
+trigger:
+- main
+
+pool:
+  vmImage: windows-latest
+
+# list/arrary
+# Stages are groups of jobs that can run without human intervention.
+# stage is a logical boundary it is used for mark seperation kile build QA. each stage has one or more jobs.
+# job is a collection of series of steps. we can run parallel jobs.each job requires an agent.
+# steps can be either scripts or tasks.
+# tasks are simple pre created scripts offered as per your convenince.
+stages:
+  - stage: "Build"
+    jobs:
+      - job: "build"
+        displayName: Build
+        steps:
+        - task: NuGetToolInstaller@1
+          displayName:  Nuget tool install
+          inputs:
+           versionSpec: 
+        - task: CopyFiles@2
+          displayName: copy files to target
+          inputs:
+            SourceFolder: 'SourceCode/aspnet-get-started'
+            Contents: '**'
+            TargetFolder: '$(build.artifactstagingdirectory)'
+        - task: NuGetCommand@2
+          displayName: Nuget Restore
+          inputs:
+            command: 'restore'
+            restoreSolution: '**/*.sln'
+            feedsToUse: 'select'
+        - task: PublishBuildArtifacts@1
+          displayName:  publish artifact to drop
+          inputs:
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+            ArtifactName: 'drop'
+            publishLocation: 'Container'
