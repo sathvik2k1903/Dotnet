@@ -17,6 +17,8 @@ pool:
 # job is a collection of series of steps. we can run parallel jobs.each job requires an agent.
 # steps can be either scripts or tasks.
 # tasks are simple pre created scripts offered as per your convenince.
+
+#Build stage
 stages:
   - stage: "Build"
     jobs:
