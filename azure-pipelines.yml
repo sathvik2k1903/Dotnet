@@ -8,8 +8,7 @@
 trigger:
 - main
 
-pool:
-  vmImage: windows-latest
+
 
 # list/arrary
 # Stages are groups of jobs that can run without human intervention.
@@ -23,6 +22,8 @@ stages:
   - stage: "Build"
     jobs:
       - job: "build"
+        pool: 
+         name:  'Self-Hosted'
         displayName: Build
         steps:
         - task: NuGetToolInstaller@1
