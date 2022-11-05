@@ -23,7 +23,7 @@ stages:
   - stage: "Build"
     jobs:
       - job: "build"
-        displayName: Build
+        displayName: Build job
         steps:
         - task: NuGetToolInstaller@1
           displayName:  Nuget tool install
@@ -52,7 +52,7 @@ stages:
   - stage: "Deploy"
     jobs:
       - job: "Deploy"
-        displayName: Deploy
+        displayName: Deploy job
         steps:
          - task: DownloadBuildArtifacts@1
            inputs:
