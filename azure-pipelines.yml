@@ -21,10 +21,7 @@ trigger:
 stages:
   - stage: "Build"
     jobs:
-      - job: "build"
-        pool: 
-         name:  'Self-Hosted'
-        displayName: Build
+      - job: "buiid"
         steps:
         - task: NuGetToolInstaller@1
           displayName:  Nuget tool install
@@ -51,17 +48,19 @@ stages:
 
 # deploy Stage
   - stage: "Deploy"
-    condition: false
     jobs:
       - job: "Deploy"
-        displayName: Deploy
+        displayName: Deploy job
         steps:
          - task: DownloadBuildArtifacts@1
            inputs:
-            buildType: 'current'
-            downloadType: 'specific'
-            itemPattern: '**'
-            downloadPath: '$(System.ArtifactsDirectory)'
+             buildType: 'specific'
+             project: 'e76c2b44-8776-4f98-8029-071e7eb6853a'
+             pipeline: '102'
+             buildVersionToDownload: 'specific'
+             buildId: '482'
+             downloadType: 'specific'
+             downloadPath: '$(System.ArtifactsDirectory)'
 
          - task: AzureRmWebAppDeployment@4
            inputs:
