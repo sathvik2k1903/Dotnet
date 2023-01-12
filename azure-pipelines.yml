@@ -8,8 +8,6 @@
 trigger:
 - main
 
-
-
 # list/arrary
 # Stages are groups of jobs that can run without human intervention.
 # stage is a logical boundary it is used for mark seperation kile build QA. each stage has one or more jobs.
